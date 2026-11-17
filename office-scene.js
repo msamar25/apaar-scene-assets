@@ -9,7 +9,7 @@ import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {clone as cloneSkinned} from 'three/addons/utils/SkeletonUtils.js';
 
-export const VERSION='1.0.0';
+export const VERSION='1.0.1';
 const HERE=new URL('./',import.meta.url).href;
 const FONT='Inter,system-ui,-apple-system,Segoe UI,sans-serif';
 const CAST=['approver','team1','team2'];
@@ -67,6 +67,7 @@ export function mount(host,models,{counts=false,onSlow=null}={}){
   if(!host)throw Error('no host');
   const canvas=document.createElement('canvas');canvas.className='scene-gl';
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'default'});
+  renderer.debug.checkShaderErrors=false;  // skip the extra shader compile check: no console noise (Windows GPU drivers), slightly faster start
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NeutralToneMapping;renderer.toneMappingExposure=1.05;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
   host.innerHTML='';host.appendChild(canvas);
